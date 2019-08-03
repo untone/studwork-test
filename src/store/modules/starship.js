@@ -1,9 +1,9 @@
-import {getStarship} from '../../api';
+import { getStarship } from '../../api'
 
 export const starship = {
   state: {
     item: {},
-    loading: true
+    loading: true,
   },
   getters: {
     item: state => state.item,
@@ -16,11 +16,11 @@ export const starship = {
     },
   },
   actions: {
-    async fetchStarship({commit, state}, payload) {
+    async fetchStarship({ commit, state }, payload) {
       const data = await getStarship(payload)
       if (data) {
         commit('setItem', data)
       }
-    }
+    },
   },
 }

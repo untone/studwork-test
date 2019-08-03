@@ -19652,7 +19652,74 @@ var index_esm = {
 };
 var _default = index_esm;
 exports.default = _default;
-},{}],"../node_modules/vue-hot-reload-api/dist/index.js":[function(require,module,exports) {
+},{}],"../node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp|chrome-extension|moz-extension):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp|chrome-extension|moz-extension):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"../node_modules/vue-hot-reload-api/dist/index.js":[function(require,module,exports) {
 var Vue // late bind
 var version
 var map = Object.create(null)
@@ -19968,7 +20035,7 @@ var _default = {
     };
   },
   watch: {
-    '$route': function $route(to) {
+    $route: function $route(to) {
       this.search = to.query.search || '';
       this.getStarships();
     },
@@ -20020,10 +20087,9 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "starships" },
+    "article",
     [
-      _c("div", [
+      _c("form", [
         _c("input", {
           directives: [
             {
@@ -20033,7 +20099,10 @@ exports.default = _default;
               expression: "search"
             }
           ],
-          attrs: { type: "text" },
+          attrs: {
+            type: "text",
+            placeholder: "Search starships by name, model"
+          },
           domProps: { value: _vm.search },
           on: {
             input: [
@@ -20050,42 +20119,52 @@ exports.default = _default;
         _vm._v(" "),
         _vm.search
           ? _c("button", { on: { click: _vm.onClean } }, [
-              _vm._v("\n      x\n    ")
+              _vm._v("\n      ×\n    ")
             ])
           : _vm._e()
       ]),
       _vm._v(" "),
-      _vm.loading
-        ? _c("div", [_vm._v("...")])
-        : _c(
-            "ul",
-            _vm._l(_vm.list, function(item) {
-              return _c(
-                "li",
-                [
-                  _c(
-                    "router-link",
-                    {
-                      attrs: {
-                        to: {
-                          name: "starship",
-                          params: {
-                            id: _vm.getId(item.url)
-                          }
+      _c("transition", { attrs: { name: "fade" } }, [
+        _vm.loading
+          ? _c("pre", [_vm._v("...")])
+          : _c(
+              "ul",
+              _vm._l(_vm.list, function(item, key) {
+                return _c(
+                  "router-link",
+                  {
+                    key: key,
+                    attrs: {
+                      tag: "li",
+                      to: {
+                        name: "starship",
+                        params: {
+                          id: _vm.getId(item.url)
                         }
                       }
-                    },
-                    [_vm._v("\n        " + _vm._s(item.name) + "\n      ")]
-                  )
-                ],
-                1
-              )
-            }),
-            0
-          ),
+                    }
+                  },
+                  [
+                    _c("a", [
+                      _c("dl", [
+                        _c("dt", [_vm._v("Name")]),
+                        _vm._v(" "),
+                        _c("dd", [_vm._v(_vm._s(item.name))]),
+                        _vm._v(" "),
+                        _c("dt", [_vm._v("Model")]),
+                        _vm._v(" "),
+                        _c("dd", [_vm._v(_vm._s(item.model))])
+                      ])
+                    ])
+                  ]
+                )
+              }),
+              1
+            )
+      ]),
       _vm._v(" "),
       _vm.pager
-        ? [
+        ? _c("footer", [
             _c(
               "button",
               {
@@ -20096,7 +20175,7 @@ exports.default = _default;
                   }
                 }
               },
-              [_vm._v("\n      prev\n    ")]
+              [_vm._v("\n      Previous\n    ")]
             ),
             _vm._v(" "),
             _c(
@@ -20109,12 +20188,12 @@ exports.default = _default;
                   }
                 }
               },
-              [_vm._v("\n      next\n    ")]
+              [_vm._v("\n      Next\n    ")]
             )
-          ]
+          ])
         : _vm._e()
     ],
-    2
+    1
   )
 }
 var staticRenderFns = []
@@ -20144,9 +20223,13 @@ render._withStripped = true
         }
 
         
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
       }
     })();
-},{"vuex":"../node_modules/vuex/dist/vuex.esm.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"components/starship.vue":[function(require,module,exports) {
+},{"vuex":"../node_modules/vuex/dist/vuex.esm.js","_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"components/starship.vue":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20184,21 +20267,50 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    { staticClass: "starship" },
+    "section",
     [
       _c("router-link", { attrs: { to: { name: "starships" } } }, [
-        _vm._v("\n    < back to stasrhips\n  ")
+        _vm._v("\n    Back to stasrhips\n  ")
       ]),
       _vm._v(" "),
       _vm.loading
-        ? _c("div", [_vm._v("...")])
+        ? _c("pre", [_vm._v("...")])
         : [
-            _c("h1", [_vm._v("Starship")]),
-            _vm._v(" "),
-            _c("ul", { staticClass: "starship__list" }, [
-              _vm._v("\n      " + _vm._s(_vm.item) + "\n    ")
-            ])
+            _c(
+              "dl",
+              [
+                _vm._l(_vm.item, function(entry, key) {
+                  return [
+                    _c("dt", [_vm._v(_vm._s(key))]),
+                    _vm._v(" "),
+                    _c(
+                      "dd",
+                      [
+                        Array.isArray(entry)
+                          ? _vm._l(entry, function(value) {
+                              return _c("span", [
+                                _vm._v(
+                                  "\n              " +
+                                    _vm._s(value) +
+                                    "\n            "
+                                )
+                              ])
+                            })
+                          : [
+                              _vm._v(
+                                "\n            " +
+                                  _vm._s(entry) +
+                                  "\n          "
+                              )
+                            ]
+                      ],
+                      2
+                    )
+                  ]
+                })
+              ],
+              2
+            )
           ]
     ],
     2
@@ -20231,9 +20343,13 @@ render._withStripped = true
         }
 
         
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
       }
     })();
-},{"vuex":"../node_modules/vuex/dist/vuex.esm.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"routes.js":[function(require,module,exports) {
+},{"vuex":"../node_modules/vuex/dist/vuex.esm.js","_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"routes.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20281,7 +20397,6 @@ var searchParams = function searchParams(params) {
 var fetchData = function fetchData(endpoint) {
   var params = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   var url = "".concat(BASE_URL).concat(endpoint, "?").concat(searchParams(params));
-  console.log('url', url);
   return fetch(url).then(function (response) {
     return response.json();
   }).catch(function (error) {
@@ -20391,7 +20506,6 @@ var starships = {
       state.loading = false;
     },
     setPage: function setPage(state, page) {
-      console.log('page', page);
       state.page = page;
     }
   },
@@ -20588,9 +20702,9 @@ exports.default = _default;
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
+    "main",
     { attrs: { id: "app" } },
-    [_c("transition", [_c("router-view")], 1)],
+    [_c("transition", { attrs: { name: "fade" } }, [_c("router-view")], 1)],
     1
   )
 }
@@ -20621,9 +20735,13 @@ render._withStripped = true
         }
 
         
+        var reloadCSS = require('_css_loader');
+        module.hot.dispose(reloadCSS);
+        module.hot.accept(reloadCSS);
+      
       }
     })();
-},{"vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"index.js":[function(require,module,exports) {
+},{"_css_loader":"../node_modules/parcel-bundler/src/builtins/css-loader.js","vue-hot-reload-api":"../node_modules/vue-hot-reload-api/dist/index.js","vue":"../node_modules/vue/dist/vue.runtime.esm.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -20697,7 +20815,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57943" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53033" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

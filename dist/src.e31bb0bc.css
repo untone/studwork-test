@@ -1,0 +1,241 @@
+form {
+  position: relative;
+  margin: 0;
+  padding: 0 0 80px;
+}
+form input {
+  margin: 0;
+  padding: 0 60px 0 25px;
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  color: #574e00;
+  background-color: #000;
+  border: 2px solid #605700;
+  transition: color 0.25s, background-color 0.25s, border-color 0.25s, z-index 0.15s;
+  outline: none;
+  apperance: none;
+}
+form input:focus {
+  color: #ae9d00;
+  background-color: #2c2707;
+  border-color: #ae9d00;
+}
+form button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ae9d00;
+  font-size: 22px;
+  font-weight: 700;
+  border: none;
+  background: none;
+  apperance: none;
+  outline: none;
+  cursor: pointer;
+  opacity: 0.65;
+  transition: opacity 0.25s;
+}
+form button:hover,
+form button:focus {
+  opacity: 1;
+}
+article {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+pre {
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e5e5e5;
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+ul li {
+  margin: 0 0 -1px;
+  padding: 0;
+  height: 120px;
+}
+ul li a {
+  position: relative;
+  margin: 0;
+  padding: 35px;
+  display: block;
+  width: 100%;
+  height: 120px;
+  text-decoration: none;
+  outline: none;
+  background-color: #141002;
+  border: 1px solid #6a6a6a;
+  transition: border-color 0.25s, background-color 0.25s;
+}
+ul li a:hover {
+  z-index: 1;
+  background-color: #1a1601;
+  border-color: #ae9d00;
+}
+ul li dl {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+}
+ul li dl dt {
+  margin: 0;
+  padding: 0;
+  width: 70px;
+  flex-grow: 0;
+  color: #e5e5e5;
+}
+ul li dl dd {
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  flex-basis: calc(100% - 70px);
+  color: #ae9d00;
+}
+ul li dl dd:first-of-type {
+  font-size: 18px;
+  font-weight: 700;
+}
+footer {
+  height: 80px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+footer button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: 0;
+  padding: 0 30px;
+  height: 100%;
+  color: #ae9d00;
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  font-weight: 700;
+  background: none;
+  border: none;
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+footer button:hover,
+footer button:focus {
+  color: #e5e5e5;
+}
+footer button[disabled] {
+  color: #6a6a6a;
+  cursor: default;
+}
+
+pre {
+  margin: 0;
+  padding: 0;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e5e5e5;
+}
+section {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+section a {
+  display: block;
+  margin: 0 0 80px;
+  padding: 0;
+  height: 60px;
+  line-height: 60px;
+  color: #ae9d00;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+}
+section dl {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 0;
+  padding: 35px;
+  font-size: 13px;
+  line-height: 18px;
+  background-color: #141002;
+  border: 1px solid #6a6a6a;
+}
+section dl dt {
+  margin: 0;
+  padding: 0 0 10px;
+  flex-basis: 200px;
+  flex-grow: 0;
+  color: #e5e5e5;
+}
+section dl dd {
+  margin: 0;
+  padding: 0 0 10px;
+  flex-grow: 1;
+  flex-basis: calc(100% - 200px);
+  color: #ae9d00;
+}
+section dl dd:first-of-type {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Space Mono', monospace;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-size: 16px;
+  background-color: #000;
+  background-image: linear-gradient(to bottom, #000, #312d01);
+  background-attachment: fixed;
+}
+main {
+  margin: 0 auto;
+  padding: 80px 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  padding: 80px 0;
+  min-width: 640px;
+  max-width: 640px;
+  height: 100%;
+}
+

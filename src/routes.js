@@ -11,7 +11,7 @@ const routes = [
     path: '/starship/:id',
     name: 'starship',
     component: Starship,
-  }
+  },
 ]
 
 export default routes

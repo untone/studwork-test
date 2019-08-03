@@ -1,21 +1,21 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from 'vue'
+import Vuex from 'vuex'
 
-import { starships } from './modules/starships';
-import { starship } from './modules/starship';
+import { starships } from './modules/starships'
+import { starship } from './modules/starship'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     starships: {
       namespaced: true,
-      ...starships
+      ...starships,
     },
     starship: {
       namespaced: true,
-      ...starship
+      ...starship,
     },
-    errors: []
-  }
+    errors: [],
+  },
 })

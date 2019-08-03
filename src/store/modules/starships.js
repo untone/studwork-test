@@ -1,4 +1,4 @@
-import {getStarships} from '../../api'
+import { getStarships } from '../../api'
 
 export const starships = {
   state: {
@@ -12,19 +12,18 @@ export const starships = {
     total: state => state.total,
   },
   mutations: {
-    setList(state, {results, count}) {
+    setList(state, { results, count }) {
       state.list = results
       state.total = count
       state.loading = false
     },
     setPage(state, page) {
-      console.log('page', page)
       state.page = page
-    }
+    },
   },
   actions: {
-    async fetchStarships({commit, state}, payload = {}) {
-      const {page} = payload
+    async fetchStarships({ commit, state }, payload = {}) {
+      const { page } = payload
       state.loading = true
       if (page) {
         commit('setPage', page)
@@ -32,7 +31,6 @@ export const starships = {
       const data = await getStarships(payload)
       if (data) {
         commit('setList', data)
-
       }
     },
   },
